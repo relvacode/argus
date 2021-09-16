@@ -12,3 +12,21 @@ In Argus Monitor:
   - Stability
   - Enable Argus Data Monitor API
   - OK and restart Argus Monitor
+
+### Telegraf Plugin
+
+This library comes with a Telegraf execd compatible plugin
+
+```
+# Note: How you put this binary in your PATH is up to you
+go build -o telegraf-argus.exe github.com/relvacode/cmd/telegraf-argus
+```
+
+Configure Telegraf with
+
+```toml
+[[inputs.execd]]
+command = ["telegraf-argus.exe"]
+signal = "STDIN"
+data_format = "influx"
+```
