@@ -19,7 +19,7 @@ This library comes with a Telegraf execd compatible plugin
 
 ```
 # Note: How you put this binary in your PATH is up to you
-go build -o telegraf-argus.exe github.com/relvacode/cmd/telegraf-argus
+go build -o telegraf-argus.exe github.com/relvacode/argus/cmd/telegraf-argus
 ```
 
 Configure Telegraf with
