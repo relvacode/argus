@@ -6,6 +6,7 @@ import (
 	"errors"
 	"github.com/relvacode/argus/binary"
 	"golang.org/x/sys/windows"
+	"runtime"
 	"sync"
 	"time"
 	"unsafe"
@@ -73,9 +74,10 @@ func (a *Api) CycleCounter() uint32 {
 
 // Read returns sensor data from the Argus Monitor interface.
 // It always reads a new sample from Argus Monitor, even if the sample hasn't changed since the last Read call.
-// Not safe for concurrent access.
-// Use Api.Cached for faster access.
+// Use Api.Cached() for faster access that can potentially skip an expensive OS thread lock and mutex acquire.
 func (a *Api) Read() (*Sample, error) {
+	runtime.LockOSThread()
+
 	_, err := windows.WaitForSingleObject(a.mutex, windows.INFINITE)
 	if err != nil {
 		return nil, err
